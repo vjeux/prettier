@@ -2337,17 +2337,17 @@ function nodeStr(node, options) {
   }
 
   const raw = options.parser === 'flow' ? node.raw : node.extra.raw;
-
   const isSingleQuote = raw.charAt(0) === "'";
 
   if (isSingleQuote === shouldUseSingleQuote) {
     return raw;
   }
 
+  const rawInner = raw.slice(1, -1).replace(/\\(["'])/g, '$1');
   if (shouldUseSingleQuote) {
-    return "'" + raw.slice(1, -1).replace(/\\"/g, '"').replace(/'/g, "\\'") + "'";
+    return "'" + rawInner.replace(/\\"/g, '"').replace(/'/g, "\\'") + "'";
   } else {
-    return '"' + raw.slice(1, -1).replace(/\\'/g, "'").replace(/"/g, '\\"') + '"';
+    return '"' + rawInner.replace(/\\'/g, "'").replace(/"/g, '\\"') + '"';
   }
 }
 
