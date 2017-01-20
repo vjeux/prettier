@@ -4,7 +4,6 @@ var comments = require("./comments");
 var FastPath = require("./fast-path");
 var util = require("./util");
 var isIdentifierName = require("esutils").keyword.isIdentifierNameES6;
-var jsesc = require("jsesc");
 
 var docBuilders = require("./doc-builders");
 var concat = docBuilders.concat;
@@ -2319,6 +2318,13 @@ function nodeStr(node, options) {
   const str = node.value;
   isString.assert(str);
 
+  // Workaround a bug in the Javascript version of the flow parser where
+  // astral unicode characters like \uD801\uDC28 are incorrectly parsed as
+  // a sequence of \uFFFD.
+  if (options.parser === "flow" && str.indexOf("\\uFFFD") !== -1) {
+    return raw;
+  }
+
   const containsSingleQuote = str.indexOf("'") !== -1;
   const containsDoubleQuote = str.indexOf('"') !== -1;
 
@@ -2330,19 +2336,19 @@ function nodeStr(node, options) {
     shouldUseSingleQuote = true;
   }
 
-  const result = jsesc(str, {
-    quotes: shouldUseSingleQuote ? "single" : "double",
-    wrap: true
-  });
+  const raw = options.parser === 'flow' ? node.raw : node.extra.raw;
 
-  // Workaround a bug in the Javascript version of the flow parser where
-  // astral unicode characters like \uD801\uDC28 are incorrectly parsed as
-  // a sequence of \uFFFD.
-  if (options.parser === "flow" && result.indexOf("\\uFFFD") !== -1) {
-    return node.raw;
+  const isSingleQuote = raw.charAt(0) === "'";
+
+  if (isSingleQuote === shouldUseSingleQuote) {
+    return raw;
   }
 
-  return result;
+  if (shouldUseSingleQuote) {
+    return "'" + raw.slice(1, -1).replace(/\\"/g, '"').replace(/'/g, "\\'") + "'";
+  } else {
+    return '"' + raw.slice(1, -1).replace(/\\'/g, "'").replace(/"/g, '\\"') + '"';
+  }
 }
 
 function isFirstStatement(path) {
