@@ -25,6 +25,9 @@
     "minimist": "1.2.0"
   },
   "devDependencies": {
+    "chalk": "^1.1.3",
+    "diff": "^3.2.0",
+    "esfuzz": "^0.3.1",
     "jest": "18.0.0",
     "rollup": "0.41.1",
     "rollup-plugin-commonjs": "7.0.0",
@@ -38,7 +41,8 @@
     "format": "./bin/prettier.js --write",
     "format:single": "npm run format -- src/printer.js",
     "format:all": "npm run format -- index.js src/*.js bin/*.js",
-    "build:docs": "rollup -c docs/rollup.config.js"
+    "build:docs": "rollup -c docs/rollup.config.js",
+    "fuzz": "node fuzz/fuzz.js"
   },
   "jest": {
     "setupFiles": [

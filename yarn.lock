@@ -10,6 +10,10 @@ abab@^1.0.0:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/abab/-/abab-1.0.3.tgz#b81de5f7274ec4e756d797cd834f303642724e5d"
 
+abbrev@1:
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.0.9.tgz#91b4792588a7738c25f35dd6f63752a2f8776135"
+
 acorn-globals@^1.0.4:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/acorn-globals/-/acorn-globals-1.0.9.tgz#55bb5e98691507b74579d0513413217c380c54cf"
@@ -23,6 +27,10 @@ acorn@^2.1.0, acorn@^2.4.0:
 acorn@^4.0.1:
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-4.0.4.tgz#17a8d6a7a6c4ef538b814ec9abac2779293bf30a"
+
+"acorn@git://github.com/marijnh/acorn.git":
+  version "4.0.4"
+  resolved "git://github.com/marijnh/acorn.git#49e68b36a818dbfc520bac61797f170d9904e8db"
 
 align-text@^0.1.1, align-text@^0.1.3:
   version "0.1.4"
@@ -138,15 +146,7 @@ aws4@^1.2.1:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.5.0.tgz#0a29ffb79c31c9e712eeb087e8e7a64b4a56d755"
 
-babel-code-frame@^6.20.0:
-  version "6.20.0"
-  resolved "https://registry.yarnpkg.com/babel-code-frame/-/babel-code-frame-6.20.0.tgz#b968f839090f9a8bc6d41938fb96cb84f7387b26"
-  dependencies:
-    chalk "^1.1.0"
-    esutils "^2.0.2"
-    js-tokens "^2.0.0"
-
-babel-code-frame@^6.22.0:
+babel-code-frame@^6.20.0, babel-code-frame@^6.22.0:
   version "6.22.0"
   resolved "https://registry.yarnpkg.com/babel-code-frame/-/babel-code-frame-6.22.0.tgz#027620bee567a88c32561574e7fd0801d33118e4"
   dependencies:
@@ -746,7 +746,7 @@ detect-indent@^4.0.0:
   dependencies:
     repeating "^2.0.0"
 
-diff@^3.0.0:
+diff@^3.0.0, diff@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/diff/-/diff-3.2.0.tgz#c9ce393a4b7cbd0b058a725c93df299027868ff9"
 
@@ -789,9 +789,9 @@ escape-string-regexp@^1.0.2:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
 
-escodegen@^1.6.1:
+escodegen@^1.6.1, "escodegen@git://github.com/Constellation/escodegen.git":
   version "1.8.1"
-  resolved "https://registry.yarnpkg.com/escodegen/-/escodegen-1.8.1.tgz#5a5b53af4693110bebb0867aa3430dd3b70a1018"
+  resolved "git://github.com/Constellation/escodegen.git#719de3033c4a9a0df27f698c47b48d2af7241835"
   dependencies:
     esprima "^2.7.1"
     estraverse "^1.9.1"
@@ -800,9 +800,26 @@ escodegen@^1.6.1:
   optionalDependencies:
     source-map "~0.2.0"
 
+esfuzz@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/esfuzz/-/esfuzz-0.3.1.tgz#ad9f41c5665c9a5ce011b54d8991390ba460c445"
+  dependencies:
+    escodegen "git://github.com/Constellation/escodegen.git"
+    nopt "~2.1.2"
+  optionalDependencies:
+    acorn "git://github.com/marijnh/acorn.git"
+    esprima "git://github.com/ariya/esprima.git"
+    reflect "git://github.com/zaach/reflect.js.git"
+    uglify-js "git://github.com/mishoo/UglifyJS2.git"
+    zeparser "git://github.com/qfox/ZeParser.git"
+
 esprima@^2.6.0, esprima@^2.7.1:
   version "2.7.3"
   resolved "https://registry.yarnpkg.com/esprima/-/esprima-2.7.3.tgz#96e3b70d5779f6ad49cd032673d1c312767ba581"
+
+"esprima@git://github.com/ariya/esprima.git":
+  version "4.0.0-dev"
+  resolved "git://github.com/ariya/esprima.git#4b0f65ebf92af4df85c523f8387359c71e7284ac"
 
 esprima@~3.0.0:
   version "3.0.0"
@@ -1782,6 +1799,12 @@ node-notifier@^4.6.1:
     shellwords "^0.1.0"
     which "^1.0.5"
 
+nopt@~2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/nopt/-/nopt-2.1.2.tgz#6cccd977b80132a07731d6e8ce58c2c8303cf9af"
+  dependencies:
+    abbrev "1"
+
 normalize-package-data@^2.3.2:
   version "2.3.5"
   resolved "https://registry.yarnpkg.com/normalize-package-data/-/normalize-package-data-2.3.5.tgz#8d924f142960e1777e7ffe170543631cc7cb02df"
@@ -2002,6 +2025,10 @@ redeyed@~1.0.0:
   resolved "https://registry.yarnpkg.com/redeyed/-/redeyed-1.0.1.tgz#e96c193b40c0816b00aec842698e61185e55498a"
   dependencies:
     esprima "~3.0.0"
+
+"reflect@git://github.com/zaach/reflect.js.git":
+  version "0.1.3"
+  resolved "git://github.com/zaach/reflect.js.git#286bcd79661c96ecc404357d3c0e35fdb54a6967"
 
 regenerator-runtime@^0.10.0:
   version "0.10.1"
@@ -2324,9 +2351,9 @@ type-check@~0.3.2:
   dependencies:
     prelude-ls "~1.1.2"
 
-uglify-js@^2.6:
+uglify-js@^2.6, "uglify-js@git://github.com/mishoo/UglifyJS2.git":
   version "2.7.5"
-  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-2.7.5.tgz#4612c0c7baaee2ba7c487de4904ae122079f2ca8"
+  resolved "git://github.com/mishoo/UglifyJS2.git#48284844a461e6113bb9911cdcdad7ab8a3d85de"
   dependencies:
     async "~0.2.6"
     source-map "~0.5.1"
@@ -2399,13 +2426,9 @@ window-size@0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/window-size/-/window-size-0.1.0.tgz#5438cd2ea93b202efa3a19fe8887aee7c94f9c9d"
 
-wordwrap@0.0.2:
+wordwrap@0.0.2, wordwrap@~0.0.2:
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/wordwrap/-/wordwrap-0.0.2.tgz#b79669bb42ecb409f83d583cad52ca17eaa1643f"
-
-wordwrap@~0.0.2:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/wordwrap/-/wordwrap-0.0.3.tgz#a3d5da6cd5c0bc0008d37234bbaf1bed63059107"
 
 wordwrap@~1.0.0:
   version "1.0.0"
@@ -2473,3 +2496,7 @@ yargs@~3.10.0:
     cliui "^2.1.0"
     decamelize "^1.0.0"
     window-size "0.1.0"
+
+"zeparser@git://github.com/qfox/ZeParser.git":
+  version "0.0.7"
+  resolved "git://github.com/qfox/ZeParser.git#c99240c5ba7054c467733800ff38265958a2dda9"
