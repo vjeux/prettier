@@ -40,36 +40,46 @@ function formatError(num, error) {
 
 const boringRegex = /^[\s;]*$|with/;
 
-let randomAST;
-let randomJS;
-do {
-  randomAST = esfuzz.generate({ maxDepth: 7 });
-  randomJS = esfuzz.render(randomAST);
-} while (boringRegex.test(randomJS));
+let tryCount = 0;
+while (true) {
+  tryCount++;
+  var randomAST = esfuzz.generate({ maxDepth: 7 });
+  var randomJS = esfuzz.render(randomAST);
+  if (boringRegex.test(randomJS)) {
+    continue;
+  }
 
-const options = randomOptions();
+  var options = randomOptions();
 
-let prettierJS1 = null;
-let prettierJS1Error = null;
-try {
-  prettierJS1 = prettier.format(randomJS, options);
-} catch (error) {
-  prettierJS1Error = error;
-}
-
-let prettierJS2 = null;
-let prettierJS2Error = null;
-if (!prettierJS1Error) {
+  var prettierJS1 = null;
+  var prettierJS1Error = null;
   try {
-    prettierJS2 = prettier.format(prettierJS1, options);
+    prettierJS1 = prettier.format(randomJS, options);
   } catch (error) {
-    prettierJS2Error = error;
+    if (error.toString().indexOf('SyntaxError') !== -1) {
+      continue;
+    }
+    prettierJS1Error = error;
+  }
+
+
+  var prettierJS2 = null;
+  var prettierJS2Error = null;
+  if (!prettierJS1Error) {
+    try {
+      prettierJS2 = prettier.format(prettierJS1, options);
+    } catch (error) {
+      prettierJS2Error = error;
+    }
+  }
+
+  var hasError = Boolean(prettierJS1Error || prettierJS2Error);
+  var hasDiff = !hasError && prettierJS1 !== prettierJS2;
+  if (hasError || hasDiff) {
+    break;
   }
 }
 
-const hasError = Boolean(prettierJS1Error || prettierJS2Error);
-
-const hasDiff = !hasError && prettierJS1 !== prettierJS2;
 const diffString = hasDiff
   ? jsdiff.diffChars(prettierJS1, prettierJS2).map(colorizeDiff).join("")
   : "";
@@ -89,7 +99,7 @@ const output = [
   separator,
   JSON.stringify(options, null, 2),
   separator,
-  message
+  message + ' after ' + tryCount + ' tries',
 ]
   .filter(part => part !== null)
   .join("\n");
