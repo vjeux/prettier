@@ -1,13 +1,13 @@
 "use strict";
 
-const codeFrame = require("babel-code-frame");
-const comments = require("./src/comments");
-const version = require("./package.json").version;
-const printAstToDoc = require("./src/printer").printAstToDoc;
-const printDocToString = require("./src/doc-printer").printDocToString;
-const normalizeOptions = require("./src/options").normalize;
-const parser = require("./src/parser");
-const printDocToDebug = require("./src/doc-debug").printDocToDebug;
+import codeFrame from "babel-code-frame";
+import * as comments from "./src/comments";
+import { version } from "./package.json";
+import { printAstToDoc } from "./src/printer";
+import { printDocToString } from "./src/doc-printer";
+import { normalize as normalizeOptions } from "./src/options";
+import * as parser from "./src/parser";
+import { printDocToDebug } from "./src/doc-debug";
 
 function guessLineEnding(text) {
   const index = text.indexOf("\n");
@@ -85,7 +85,7 @@ function formatWithShebang(text, opts) {
   return shebang + newLine + format(programText, opts);
 }
 
-module.exports = {
+export default {
   format: function(text, opts) {
     return formatWithShebang(text, normalizeOptions(opts));
   },

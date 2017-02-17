@@ -54,4 +54,4 @@ function parseWithBabylon(text) {
   });
 }
 
-module.exports = { parseWithFlow, parseWithBabylon };
+export { parseWithFlow, parseWithBabylon };

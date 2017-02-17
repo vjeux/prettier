@@ -1,6 +1,6 @@
 "use strict";
 
-const utils = require("./doc-utils");
+import * as utils from "./doc-utils";
 const willBreak = utils.willBreak;
 
 function assertDoc(val) {
@@ -90,7 +90,7 @@ function join(sep, arr) {
   return concat(res);
 }
 
-module.exports = {
+export {
   concat,
   join,
   line,

@@ -126,7 +126,7 @@ function propagateBreaks(doc) {
   );
 }
 
-module.exports = {
+export {
   isEmpty,
   getFirstString,
   willBreak,

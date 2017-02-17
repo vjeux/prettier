@@ -1,12 +1,13 @@
 "use strict";
 
-var assert = require("assert");
-var comments = require("./comments");
-var FastPath = require("./fast-path");
-var util = require("./util");
-var isIdentifierName = require("esutils").keyword.isIdentifierNameES6;
+import assert from "assert";
+import * as comments from "./comments";
+import FastPath from "./fast-path";
+import * as util from "./util";
+import esutils from 'esutils';
+var isIdentifierName = esutils.keyword.isIdentifierNameES6;
 
-var docBuilders = require("./doc-builders");
+import * as docBuilders from "./doc-builders";
 var concat = docBuilders.concat;
 var join = docBuilders.join;
 var line = docBuilders.line;
@@ -19,13 +20,13 @@ var conditionalGroup = docBuilders.conditionalGroup;
 var ifBreak = docBuilders.ifBreak;
 var breakParent = docBuilders.breakParent;
 
-var docUtils = require("./doc-utils");
+import * as docUtils from "./doc-utils";
 var willBreak = docUtils.willBreak;
 var isLineNext = docUtils.isLineNext;
 var getFirstString = docUtils.getFirstString;
 var isEmpty = docUtils.isEmpty;
 
-var types = require("ast-types");
+import types from "ast-types";
 var namedTypes = types.namedTypes;
 var isString = types.builtInTypes.string;
 var isObject = types.builtInTypes.object;
@@ -2835,4 +2836,4 @@ function printAstToDoc(ast, options) {
   return doc;
 }
 
-module.exports = { printAstToDoc };
+export { printAstToDoc };

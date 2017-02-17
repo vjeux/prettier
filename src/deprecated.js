@@ -10,4 +10,4 @@ const deprecated = {
   }`
 };
 
-module.exports = deprecated;
+export default deprecated;

@@ -1,17 +1,16 @@
-var assert = require("assert");
-var types = require("ast-types");
+import assert from "assert";
+import types from "ast-types";
 var n = types.namedTypes;
 var isArray = types.builtInTypes.array;
 var isObject = types.builtInTypes.object;
-var docBuilders = require("./doc-builders");
-var fromString = docBuilders.fromString;
+import * as docBuilders from "./doc-builders";
 var concat = docBuilders.concat;
 var hardline = docBuilders.hardline;
 var breakParent = docBuilders.breakParent;
 var indent = docBuilders.indent;
 var lineSuffix = docBuilders.lineSuffix;
 var join = docBuilders.join;
-var util = require("./util");
+import * as util from "./util";
 var comparePos = util.comparePos;
 var childNodesCacheKey = Symbol("child-nodes");
 var locStart = util.locStart;
@@ -536,4 +535,4 @@ function printComments(path, print, options) {
   return concat(leadingParts.concat(trailingParts));
 }
 
-module.exports = { attach, printComments, printDanglingComments };
+export { attach, printComments, printDanglingComments };
