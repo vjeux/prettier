@@ -1,7 +1,8 @@
 "use strict";
 
-var validate = require("jest-validate").validate;
-var deprecatedConfig = require("./deprecated");
+import jest from "jest-validate";
+const { validate } = jest;
+import deprecatedConfig from "./deprecated";
 
 var defaults = {
   tabWidth: 2,
@@ -39,4 +40,4 @@ function normalize(options) {
   return normalized;
 }
 
-module.exports = { normalize };
+export { normalize };

@@ -1,7 +1,7 @@
 "use strict";
 
-var assert = require("assert");
-var types = require("ast-types");
+import assert from "assert";
+import types from "ast-types";
 var n = types.namedTypes;
 
 function comparePos(pos1, pos2) {
@@ -298,7 +298,7 @@ function getPrecedence(op) {
   return PRECEDENCE[op];
 }
 
-module.exports = {
+export {
   comparePos,
   getPrecedence,
   fixFaultyLocations,

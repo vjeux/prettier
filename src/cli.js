@@ -1,12 +1,12 @@
 "use strict";
 
-const fs = require("fs");
-const getStdin = require("get-stdin");
-const glob = require("glob");
-const chalk = require("chalk");
-const minimist = require("minimist");
-const readline = require("readline");
-const prettier = require("../index");
+import fs from "fs";
+import getStdin from "get-stdin";
+import glob from "glob";
+import chalk from "chalk";
+import minimist from "minimist";
+import readline from "readline";
+import prettier from "../index";
 
 const argv = minimist(process.argv.slice(2), {
   boolean: [

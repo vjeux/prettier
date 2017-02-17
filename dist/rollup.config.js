@@ -8,7 +8,9 @@ export default {
   format: 'cjs',
   plugins: [
     json(),
-    commonjs(),
+    commonjs({
+      include: 'node_modules/**'
+    }),
     resolve(),
   ],
   useStrict: false,

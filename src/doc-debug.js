@@ -98,8 +98,8 @@ function printDoc(doc) {
   throw new Error("Unknown doc type " + doc.type);
 }
 
-module.exports = {
-  printDocToDebug: function(doc) {
-    return printDoc(flattenDoc(doc));
-  }
+const printDocToDebug = function(doc) {
+  return printDoc(flattenDoc(doc));
 };
+
+export { printDocToDebug };

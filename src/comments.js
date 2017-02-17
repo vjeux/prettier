@@ -1,21 +1,11 @@
-var assert = require("assert");
-var types = require("ast-types");
+import assert from "assert";
+import types from "ast-types";
 var n = types.namedTypes;
 var isArray = types.builtInTypes.array;
 var isObject = types.builtInTypes.object;
-var docBuilders = require("./doc-builders");
-var fromString = docBuilders.fromString;
-var concat = docBuilders.concat;
-var hardline = docBuilders.hardline;
-var breakParent = docBuilders.breakParent;
-var indent = docBuilders.indent;
-var lineSuffix = docBuilders.lineSuffix;
-var join = docBuilders.join;
-var util = require("./util");
-var comparePos = util.comparePos;
+import { concat, hardline, breakParent, indent, lineSuffix, join } from "./doc-builders";
+import * as util from "./util";
 var childNodesCacheKey = Symbol("child-nodes");
-var locStart = util.locStart;
-var locEnd = util.locEnd;
 
 // TODO Move a non-caching implementation of this function into ast-types,
 // and implement a caching wrapper function here.
@@ -34,7 +24,7 @@ function getSortedChildNodes(node, text, resultArray) {
       // time because we almost always (maybe always?) append the
       // nodes in order anyway.
       for (var i = resultArray.length - 1; i >= 0; --i) {
-        if (locEnd(resultArray[i]) - locStart(node) <= 0) {
+        if (util.locEnd(resultArray[i]) - util.locStart(node) <= 0) {
           break;
         }
       }
@@ -81,8 +71,8 @@ function decorateComment(node, comment, text) {
     var child = childNodes[middle];
 
     if (
-      locStart(child) - locStart(comment) <= 0 &&
-      locEnd(comment) - locEnd(child) <= 0
+      util.locStart(child) - util.locStart(comment) <= 0 &&
+      util.locEnd(comment) - util.locEnd(child) <= 0
     ) {
       // The comment is completely contained by this child node.
       comment.enclosingNode = child;
@@ -91,7 +81,7 @@ function decorateComment(node, comment, text) {
       return; // Abandon the binary search at this level.
     }
 
-    if (locEnd(child) - locStart(comment) <= 0) {
+    if (util.locEnd(child) - util.locStart(comment) <= 0) {
       // This child node falls completely before the comment.
       // Because we will never consider this node or any nodes
       // before it again, this node must be the closest preceding
@@ -101,7 +91,7 @@ function decorateComment(node, comment, text) {
       continue;
     }
 
-    if (locEnd(comment) - locStart(child) <= 0) {
+    if (util.locEnd(comment) - util.locStart(child) <= 0) {
       // This child node falls completely after the comment.
       // Because we will never consider this node or any nodes after
       // it again, this node must be the closest following node we
@@ -137,7 +127,7 @@ function attach(comments, ast, text) {
     const enclosingNode = comment.enclosingNode;
     const followingNode = comment.followingNode;
 
-    if (util.hasNewline(text, locStart(comment), { backwards: true })) {
+    if (util.hasNewline(text, util.locStart(comment), { backwards: true })) {
       // If a comment exists on its own line, prefer a leading comment.
       // We also need to check if it's the first line of the file.
       if (
@@ -157,7 +147,7 @@ function attach(comments, ast, text) {
         // There are no nodes, let's attach it to the root of the ast
         addDanglingComment(ast, comment);
       }
-    } else if (util.hasNewline(text, locEnd(comment))) {
+    } else if (util.hasNewline(text, util.locEnd(comment))) {
       if (
         handleConditionalExpressionComments(
           enclosingNode,
@@ -228,7 +218,7 @@ function breakTies(tiesToBreak, text) {
 
   var precedingNode = tiesToBreak[0].precedingNode;
   var followingNode = tiesToBreak[0].followingNode;
-  var gapEndPos = locStart(followingNode);
+  var gapEndPos = util.locStart(followingNode);
 
   // Iterate backwards through tiesToBreak, examining the gaps
   // between the tied comments. In order to qualify as leading, a
@@ -243,13 +233,13 @@ function breakTies(tiesToBreak, text) {
     assert.strictEqual(comment.precedingNode, precedingNode);
     assert.strictEqual(comment.followingNode, followingNode);
 
-    var gap = text.slice(locEnd(comment), gapEndPos);
+    var gap = text.slice(util.locEnd(comment), gapEndPos);
     if (/\S/.test(gap)) {
       // The gap string contained something other than whitespace.
       break;
     }
 
-    gapEndPos = locStart(comment);
+    gapEndPos = util.locStart(comment);
   }
 
   tiesToBreak.forEach(function(comment, i) {
@@ -422,7 +412,7 @@ function printLeadingComment(commentPath, print, options) {
   if (isBlock) {
     return concat([
       contents,
-      util.hasNewline(options.originalText, locEnd(comment)) ? hardline : " "
+      util.hasNewline(options.originalText, util.locEnd(comment)) ? hardline : " "
     ]);
   }
 
@@ -435,7 +425,7 @@ function printTrailingComment(commentPath, print, options, parentNode) {
   const isBlock = comment.type === "Block" || comment.type === "CommentBlock";
 
   if (
-    util.hasNewline(options.originalText, locStart(comment), {
+    util.hasNewline(options.originalText, util.locStart(comment), {
       backwards: true
     })
   ) {
@@ -536,4 +526,4 @@ function printComments(path, print, options) {
   return concat(leadingParts.concat(trailingParts));
 }
 
-module.exports = { attach, printComments, printDanglingComments };
+export { attach, printComments, printDanglingComments };

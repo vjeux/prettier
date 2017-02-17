@@ -1,6 +1,6 @@
-var assert = require("assert");
-var types = require("ast-types");
-var util = require("./util");
+import assert from "assert";
+import types from "ast-types";
+import { getPrecedence } from "./util";
 var n = types.namedTypes;
 var Node = n.Node;
 var isArray = types.builtInTypes.array;
@@ -315,9 +315,9 @@ FPp.needsParens = function(assumeExpressionContext) {
         case "BinaryExpression":
         case "LogicalExpression":
           var po = parent.operator;
-          var pp = util.getPrecedence(po);
+          var pp = getPrecedence(po);
           var no = node.operator;
-          var np = util.getPrecedence(no);
+          var np = getPrecedence(no);
 
           if (pp > np) {
             return true;
@@ -625,4 +625,4 @@ FPp.firstInStatement = function() {
   return true;
 };
 
-module.exports = FastPath;
+export default FastPath;

@@ -247,4 +247,4 @@ function printDocToString(doc, width, newLine) {
   return out.join("");
 }
 
-module.exports = { printDocToString };
+export { printDocToString };
