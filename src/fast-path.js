@@ -1,6 +1,6 @@
 import assert from "assert";
 import types from "ast-types";
-import * as util from "./util";
+import { getPrecedence } from "./util";
 var n = types.namedTypes;
 var Node = n.Node;
 var isArray = types.builtInTypes.array;
@@ -315,9 +315,9 @@ FPp.needsParens = function(assumeExpressionContext) {
         case "BinaryExpression":
         case "LogicalExpression":
           var po = parent.operator;
-          var pp = util.getPrecedence(po);
+          var pp = getPrecedence(po);
           var no = node.operator;
-          var np = util.getPrecedence(no);
+          var np = getPrecedence(no);
 
           if (pp > np) {
             return true;

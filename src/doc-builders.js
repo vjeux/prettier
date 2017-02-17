@@ -1,7 +1,6 @@
 "use strict";
 
-import * as utils from "./doc-utils";
-const willBreak = utils.willBreak;
+import { willBreak } from "./doc-utils";
 
 function assertDoc(val) {
   if (

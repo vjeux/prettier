@@ -7,24 +7,8 @@ import * as util from "./util";
 import esutils from 'esutils';
 var isIdentifierName = esutils.keyword.isIdentifierNameES6;
 
-import * as docBuilders from "./doc-builders";
-var concat = docBuilders.concat;
-var join = docBuilders.join;
-var line = docBuilders.line;
-var hardline = docBuilders.hardline;
-var softline = docBuilders.softline;
-var literalline = docBuilders.literalline;
-var group = docBuilders.group;
-var indent = docBuilders.indent;
-var conditionalGroup = docBuilders.conditionalGroup;
-var ifBreak = docBuilders.ifBreak;
-var breakParent = docBuilders.breakParent;
-
-import * as docUtils from "./doc-utils";
-var willBreak = docUtils.willBreak;
-var isLineNext = docUtils.isLineNext;
-var getFirstString = docUtils.getFirstString;
-var isEmpty = docUtils.isEmpty;
+import { concat, join, line, hardline, softline, literalline, group, indent, conditionalGroup, ifBreak, breakParent } from "./doc-builders";
+import { willBreak, isLineNext, getFirstString, isEmpty, propagateBreaks } from "./doc-utils";
 
 import types from "ast-types";
 var namedTypes = types.namedTypes;
@@ -2832,7 +2816,7 @@ function printAstToDoc(ast, options) {
   }
 
   const doc = printGenerically(FastPath.from(ast));
-  docUtils.propagateBreaks(doc);
+  propagateBreaks(doc);
   return doc;
 }
 
